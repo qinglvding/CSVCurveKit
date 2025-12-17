@@ -101,7 +101,7 @@ private slots:
 
 private:
     void setupUI();
-    void setupLeftPanel();
+    QWidget* setupLeftPanel();
     void setupCenterPanel();
     void setupRightPanel();
     void updateCurveProperties();

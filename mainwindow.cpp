@@ -21,10 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
       dragModeEnabled(false), isDragging(false), draggedGraph(nullptr), draggedPointIndex(-1),
       hasAutoRescaled(false)
 {
-    // 设置程序默认字体为Microsoft YaHei
-    QFont defaultFont("Microsoft YaHei", 9);
-    QApplication::setFont(defaultFont);
-    
     // 初始化默认字体
     plotTitleFont = QFont("Microsoft YaHei", 12, QFont::Bold);
     xAxisLabelFont = QFont("Microsoft YaHei", 10);
@@ -115,19 +111,19 @@ void MainWindow::setupUI()
     
     QHBoxLayout* mainLayout = new QHBoxLayout(centralWidget);
     
-    setupLeftPanel();
+    QWidget* leftWidget = setupLeftPanel();
     setupCenterPanel();
     setupRightPanel();
     
-    mainLayout->addWidget(curveList->parentWidget(), 1);
+    mainLayout->addWidget(leftWidget, 1);
     mainLayout->addWidget(customPlot, 3);
     mainLayout->addWidget(rightPanel, 1);
     
-    setWindowTitle("CSV曲线分析工具 v1.0");
+    setWindowTitle("CSV曲线分析工具 v1.1");
     showMaximized();  // 默认最大化显示（全屏）
 }
 
-void MainWindow::setupLeftPanel()
+QWidget* MainWindow::setupLeftPanel()
 {
     QWidget* leftWidget = new QWidget();
     QVBoxLayout* leftLayout = new QVBoxLayout(leftWidget);
@@ -148,6 +144,8 @@ void MainWindow::setupLeftPanel()
     leftLayout->addWidget(curveList);
     leftLayout->addWidget(btnAddCurve);
     leftLayout->addWidget(btnDeleteCurve);
+    
+    return leftWidget;
 }
 
 void MainWindow::setupCenterPanel()
@@ -349,7 +347,7 @@ void MainWindow::setupRightPanel()
     spinYMax = new QDoubleSpinBox();
     spinYMax->setRange(-1e10, 1e10);
     spinYMax->setDecimals(10);
-    spinYMax->setValue(100000);
+    spinYMax->setValue(1000000);
     
     btnApplyRange = new QPushButton("应用范围");
     btnAutoRange = new QPushButton("自动范围");
